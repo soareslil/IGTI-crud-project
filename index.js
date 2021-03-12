@@ -51,3 +51,29 @@ function clear() {
   inputName.focus();
   globalIsEditing = false;
 }
+
+function renderNames() {
+  function removeItem() {
+    globalNames.splice(index, 1);
+    renderNames();
+  }
+  var button = document.createElement("button");
+  button.textContent = "delete";
+  button.classList.add("click", removeItem);
+  return button;
+}
+
+function createNameSpan(currentName, currentItem) {
+  function editItem() {
+    var inputName = getInput();
+    globalIsEditing = true;
+    globalCurrentItem = currentItem;
+    inputName.value = currentName;
+    inputName.focus();
+  }
+  var span = document.createElement("span");
+  span.textContent = currentName;
+  span.classList.add("clickable");
+  span.addEventListner("click", editItem);
+  return span;
+}
