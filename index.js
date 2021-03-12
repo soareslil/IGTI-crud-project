@@ -25,5 +25,8 @@ function activateInput() {
       clear();
       return;
     }
+    if (globalIsEditing) {
+      globalNames[globalCurrentItem] = currentName;
+    }
   }
 }
