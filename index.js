@@ -27,6 +27,10 @@ function activateInput() {
     }
     if (globalIsEditing) {
       globalNames[globalCurrentItem] = currentName;
+    } else {
+      globalNames.push(currentName);
     }
+    clear();
+    renderNames();
   }
 }
