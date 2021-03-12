@@ -1,0 +1,55 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap");
+
+* {
+  box-sizing: border-box;
+  font-family: "poppins", sans-serif;
+  background-image: url("https://images.freeimages.com/images/large-previews/a3b/website-rays-background-pattern-1637863.png");
+}
+
+html,
+body {
+  margin: 0;
+}
+
+#getAll {
+  width: 50vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+main h1, h2 {
+  color: blue;
+  font-size: 2rem;
+}
+
+main input {
+  width: 100%;
+  padding: 12px 40px;
+  margin: 8px 0;
+  margin-bottom: 40px;
+  box-sizing: border-box;  
+  border-radius: 4%;
+  border: 1px solid;
+  color: blue;
+}
+
+
+ul,
+li {
+  list-style-type: none;
+  color: blue;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.deleteButton {
+  color: blue;
+  font-weight: bold;
+  margin-right: 15px;
+  margin-top: 10px;
+  border-radius: 19%;
+}

@@ -1,79 +1,113 @@
 window.addEventListener("load", start);
 
-var globalIsEditing = false;
-var globalCurrentItem = null;
-var globalNames = [];
+var globalNames = ["University", "of", "California", "at", "Berkeley"];
+var inputName = null;
+var currentIndex = null;
+var isEditing = false;
 
 function start() {
+  inputName = document.querySelector("#inputName");
+
   preventFormSubmit();
   activateInput();
-  renderNames();
+  render();
 }
 
 function preventFormSubmit() {
-  function handlFormSubmit(event) {
+  function handleFormSubmit(event) {
     event.preventDefault();
   }
 
   var form = document.querySelector("form");
-  form.addEventListener("submit", handlFormSubmit);
+  form.addEventListener("submit", handleFormSubmit);
 }
 
 function activateInput() {
-  function handleKeyup(event) {
-    if (event.key !== "Enter") {
-      return;
-    }
-    var currentName = event.target.value.trim();
-    if (currentName === "") {
-      clear();
-      return;
-    }
-    if (globalIsEditing) {
-      globalNames[globalCurrentItem] = currentName;
-    } else {
-      globalNames.push(currentName);
-    }
-    clear();
-    renderNames();
+  function insertName(newName) {
+    globalNames.push(newName);
   }
-  var inputName = getInput();
-  inputName.addEventListener("keyup", handleKeyup);
+
+  function updateName(newName) {
+    globalNames[currentIndex] = newName;
+  }
+
+  function handleTyping(event) {
+    var hasText = !!event.target.value && event.target.value.trim() !== "";
+
+    if (!hasText) {
+      clearInput();
+      return;
+    }
+
+    if (event.key === "Enter") {
+      if (isEditing) {
+        updateName(event.target.value);
+      } else {
+        insertName(event.target.value);
+      }
+
+      render();
+      isEditing = false;
+      clearInput();
+    }
+  }
+
+  inputName.addEventListener("keyup", handleTyping);
+  inputName.focus();
 }
 
-function getInput() {
-  return document.querySelector(#inputName);
+function render() {
+  function createDeleteButton(index) {
+    function deleteName() {
+      globalNames.splice(index, 1);
+      render();
+    }
+    var button = document.createElement("button");
+    button.classList.add("deleteButton");
+    button.textContent = 'X';
+    button.addEventListener("click", deleteName);
+    return button;
+  }
+
+  function createSpan(name, index) {
+    function editItem() {
+      inputName.value = name;
+      inputName.focus();
+      isEditing = true;
+      currentIndex = index;
+    }
+
+    var span = document.createElement("span");
+    span.classList.add("clickable");
+    span.textContent = name;
+    span.addEventListener("click", editItem);
+
+    return span;
+  }
+
+  var divNames = document.querySelector("#names");
+  divNames.innerHTML = "";
+
+  var ul = document.createElement("ul");
+
+  for (var i = 0; i < globalNames.length; i++) {
+    var currentName = globalNames[i];
+
+    var li = document.createElement("li");
+    var button = createDeleteButton(i);
+    var span = createSpan(currentName, i);
+
+    li.appendChild(button);
+    li.appendChild(span);
+
+    ul.appendChild(li);
+  }
+
+  divNames.appendChild(ul);
+  clearInput();
 }
 
-function clear() {
-  var inputName = getInput();
+function clearInput() {
   inputName.value = "";
   inputName.focus();
-  globalIsEditing = false;
-}
-
-function renderNames() {
-  function removeItem() {
-    globalNames.splice(index, 1);
-    renderNames();
-  }
-  var button = document.createElement("button");
-  button.textContent = "delete";
-  button.classList.add("click", removeItem);
-  return button;
-}
-
-function createNameSpan(currentName, currentItem) {
-  function editItem() {
-    var inputName = getInput();
-    globalIsEditing = true;
-    globalCurrentItem = currentItem;
-    inputName.value = currentName;
-    inputName.focus();
-  }
-  var span = document.createElement("span");
-  span.textContent = currentName;
-  span.classList.add("clickable");
-  span.addEventListner("click", editItem);
-  return span;
 }
