@@ -4,3 +4,4 @@
 - learned from IGTI FullStack Bootcamp 2021
 - Simple style 
 - Practicing css style
+- Live project: https://soareslil.github.io/IGTI-crud-project/
